@@ -65,3 +65,28 @@ function machine_entity_base_field_info(\Drupal\Core\Entity\EntityTypeInterface 
 
   return $fields;
 }
+
+/**
+ * Implements hook_theme_suggestions_alter().
+ *
+ * Does our configured types checking on suggestion hook.
+ * Extends suggestions.
+ *
+ * @TODO: Make this code work with 'block_content'.
+ */
+function machine_theme_suggestions_alter(&$suggestions, $variables, $hook) {
+  // Get configured entities.
+  $types = \Drupal::configFactory()->get('machine.settings')->get('types') ?? [];
+
+  if(!in_array($hook, $types, true)) return;
+
+  $elements = $variables['elements'];
+
+  // We need entity.
+  if(!$entity = $elements['#' . $elements['#entity_type']]) return;
+
+  // Don't do anything for empty 'machine' field value.
+  if(!$entity->machine->value) return;
+
+  $suggestions[] = implode('__', [$elements['#entity_type'], $elements['#view_mode'], $entity->machine->value]);
+}
