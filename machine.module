@@ -88,5 +88,16 @@ function machine_theme_suggestions_alter(&$suggestions, $variables, $hook) {
   // Don't do anything for empty 'machine' field value.
   if(!$entity->machine->value) return;
 
-  $suggestions[] = implode('__', [$elements['#entity_type'], $elements['#view_mode'], $entity->machine->value]);
+  $entity_base = $elements['#entity_type'] . '__' . $entity->getType();
+
+  $suggestions[] = implode('__', [
+    $entity_base,
+    $entity->machine->value
+  ]);
+
+  $suggestions[] = implode('__', [
+    $entity_base,
+    $elements['#view_mode'],
+    $entity->machine->value
+  ]);
 }
