@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Just to make sure entity field info cache is clear.
+ */
+function machine_uninstall() {
+  \Drupal\Core\Cache\Cache::invalidateTags(['entity_field_info']);
+}
