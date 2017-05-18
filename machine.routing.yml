@@ -6,4 +6,3 @@ machine.admin_form:
     _title: 'Administer Machine for entity types'
   requirements:
     _permission: 'administer machine configuration'
-

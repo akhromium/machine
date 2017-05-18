@@ -36,7 +36,8 @@ CONFIGURATION
  * Select entity types in Administration » Configuration »
    Development » Machine settings.
 
- * Edit any entity of selected type - you will find new form field with label "Machine name".
+ * Edit any entity of selected type - you will find new form field
+   with label "Machine name".
 
 
 Contact
