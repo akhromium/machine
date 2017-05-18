@@ -6,7 +6,7 @@ use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Test login provided by module
+ * Test login provided by module.
  *
  * @package Drupal\Tests\machine\Functional
  *
@@ -15,9 +15,7 @@ use Drupal\Tests\BrowserTestBase;
 class AdminTest extends BrowserTestBase {
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   public static $modules = ['node', 'machine'];
 
@@ -28,20 +26,23 @@ class AdminTest extends BrowserTestBase {
    */
   protected $user;
 
-
   /**
    * {@inheritdoc}
    */
   protected function setUp() {
     parent::setUp();
-    $this->user = $this->drupalCreateUser(['administer site configuration', 'administer machine configuration']);
+    $this->user = $this->drupalCreateUser([
+      'administer site configuration',
+      'administer machine configuration',
+    ]);
   }
 
   /**
+   * Testing admin form.
+   *
    * @test
    */
-  public function test_configure_entity()
-  {
+  public function aUserConfiguresModule() {
     $this->drupalLogin($this->user);
 
     $this->drupalGet(Url::fromRoute('machine.admin_form'));
@@ -57,4 +58,5 @@ class AdminTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('Success');
     $this->assertSession()->checkboxChecked('types[node]');
   }
+
 }

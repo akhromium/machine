@@ -2,30 +2,29 @@
 
 namespace Drupal\Tests\machine\Functional;
 
-use Drupal\Core\Cache\Cache;
-use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Class NodeTest
+ * Class NodeTest.
  *
  * @package Drupal\Tests\machine\Functional
  *
  * @group machine
  */
-class NodeTest extends BrowserTestBase
-{
+class NodeTest extends BrowserTestBase {
 
   /**
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = [
     'node',
     'datetime',
-    'machine'
+    'machine',
   ];
 
   /**
+   * Prepared User.
+   *
    * @var \Drupal\user\UserInterface
    */
   protected $user;
@@ -37,16 +36,16 @@ class NodeTest extends BrowserTestBase
     parent::setUp();
     $this->user = $this->drupalCreateUser([
       'administer nodes',
-      'administer machine configuration'
-    ], null, true);
+      'administer machine configuration',
+    ], NULL, TRUE);
 
     // Create Basic page and Article node types.
     if ($this->profile != 'standard') {
       $this->drupalCreateContentType([
-        'type' => 'page',
-        'name' => 'Basic page',
+        'type'              => 'page',
+        'name'              => 'Basic page',
         'display_submitted' => FALSE,
-        'preview_mode' => DRUPAL_DISABLED
+        'preview_mode'      => DRUPAL_DISABLED,
       ]);
     }
 
@@ -56,15 +55,17 @@ class NodeTest extends BrowserTestBase
   }
 
   /**
+   * Testing node edit for when machine is enabled.
+   *
    * @test
    */
-  public function test_node_edit()
-  {
+  public function aUserEditsNode() {
     $this->drupalLogin($this->user);
     $session = $this->assertSession();
 
     $types = $this->config('machine.settings')->get('types');
-    $this->assertEquals(['node'], $types, 'Expect we have proper config for node');
+    $this->assertEquals(['node'], $types,
+      'Expect we have proper config for node');
 
     $node = $this->drupalCreateNode();
 
@@ -83,4 +84,5 @@ class NodeTest extends BrowserTestBase
     $session->statusCodeEquals(200);
     $session->pageTextContains('Title_123');
   }
+
 }
